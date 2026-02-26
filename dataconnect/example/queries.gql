@@ -1,0 +1,45 @@
+query ListAllProducts @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  products(orderBy: [{createdAt: DESC}], limit: 20) {
+    id
+    name
+    price
+    imageUrl
+    category
+    description
+  }
+}
+
+query GetUserProfile @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users.") {
+  user(key: {id_expr: "auth.uid"}) {
+    id
+    email
+    displayName
+    shippingAddress
+    billingAddress
+    phoneNumber
+    createdAt
+  }
+}
+
+mutation CreateCartItem($productId: UUID!, $quantity: Int!) @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users.") {
+  cartItem_insert(
+    data: {
+      productId: $productId
+      quantity: $quantity
+      cartId_expr: "auth.uid" # Assuming cart ID is tied to user UID
+    }
+  ) {
+    id
+  }
+}
+
+mutation UpdateProductStock($productId: UUID!, $newStockQuantity: Int!) @auth(expr: "auth.token.admin == true") {
+  product_update(
+    key: {id: $productId},
+    data: {
+      stockQuantity: $newStockQuantity
+    }
+  ) {
+    id
+  }
+}

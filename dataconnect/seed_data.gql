@@ -1,0 +1,48 @@
+mutation SeedData @transaction @auth(level: PUBLIC, insecureReason: "This is seed data and does not require user authentication.") {
+  user1: user_insert(data: {
+    id: "e0a2b1c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c",
+    email: "john.doe@example.com",
+    passwordHash: "hashedpassword123",
+    createdAt: "2023-10-27T10:00:00Z",
+    role: "customer",
+    displayName: "John Doe",
+    shippingAddress: "123 Main St, Anytown, USA",
+    billingAddress: "123 Main St, Anytown, USA",
+    phoneNumber: "555-123-4567"
+  })
+  product1: product_insert(data: {
+    id: "f1a2b3c4-d5e6-7f8a-9b0c-1d2e3f4a5b6c",
+    name: "Wireless Headphones",
+    price: 99.99,
+    stockQuantity: 50,
+    createdAt: "2023-10-27T10:05:00Z",
+    description: "High-quality wireless headphones with noise cancellation.",
+    imageUrl: "https://example.com/headphones.jpg",
+    category: "Electronics"
+  })
+  product2: product_insert(data: {
+    id: "g2a3b4c5-d6e7-8f9a-0b1c-2d3e4f5a6b7c",
+    name: "Smartwatch",
+    price: 199.99,
+    stockQuantity: 30,
+    createdAt: "2023-10-27T10:10:00Z",
+    description: "Feature-rich smartwatch with health tracking.",
+    imageUrl: "https://example.com/smartwatch.jpg",
+    category: "Wearables"
+  })
+  cart1: cart_insert(data: {
+    id: "h3a4b5c6-d7e8-9f0a-1b2c-3d4e5f6a7b8c",
+    userId: "e0a2b1c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c",
+    createdAt: "2023-10-27T10:15:00Z"
+  })
+  cartItem1: cartItem_insert(data: {
+    cartId: "h3a4b5c6-d7e8-9f0a-1b2c-3d4e5f6a7b8c",
+    productId: "f1a2b3c4-d5e6-7f8a-9b0c-1d2e3f4a5b6c",
+    quantity: 1
+  })
+  cartItem2: cartItem_insert(data: {
+    cartId: "h3a4b5c6-d7e8-9f0a-1b2c-3d4e5f6a7b8c",
+    productId: "g2a3b4c5-d6e7-8f9a-0b1c-2d3e4f5a6b7c",
+    quantity: 2
+  })
+}
